@@ -101,6 +101,7 @@ class OffsiteCaptureAction extends BaseApiAwareAction implements GatewayAwareInt
             method_exists($this->omnipayGateway, 'completePurchase')
         ) {
             if (false == $details['_captureCompleted']) {
+                $details['clientEmail'] = $request->getFirstModel()->getClientEmail();
                 $response = $this->omnipayGateway->completePurchase($details->toUnsafeArray())->send();
 
                 $details['_captureCompleted'] = true;
