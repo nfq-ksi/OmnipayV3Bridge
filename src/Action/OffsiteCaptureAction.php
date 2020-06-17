@@ -62,8 +62,13 @@ class OffsiteCaptureAction extends BaseApiAwareAction implements GatewayAwareInt
                 $details['_data'] = $data;
             }
 
+            if ($response->getCode() === '2') {
+                $details['_status'] = 'pending';
+            } else {
+                $details['_status'] = $response->isSuccessful() ? 'captured' : 'failed';
+            }
+
             $details['_reference'] = $response->getTransactionReference();
-            $details['_status'] = $response->isSuccessful() ? 'captured' : 'failed';
             $details['paid'] = $response->isSuccessful() ? true : false;
             $details['_status_code'] = $response->getCode();
             $details['_status_message'] = $response->isSuccessful() ? '' : $response->getMessage();
@@ -139,8 +144,13 @@ class OffsiteCaptureAction extends BaseApiAwareAction implements GatewayAwareInt
             $details['_data'] = $data;
         }
 
+        if ($response->getCode() === '2') {
+            $details['_status'] = 'pending';
+        } else {
+            $details['_status'] = $response->isSuccessful() ? 'captured' : 'failed';
+        }
+
         $details['_reference']      = $response->getTransactionReference();
-        $details['_status']         = $response->isSuccessful() ? 'captured' : 'failed';
         $details['_status_code']    = $response->getCode();
         $details['_status_message'] = $response->isSuccessful() ? '' : $response->getMessage();
     }
