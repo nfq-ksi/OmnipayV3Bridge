@@ -24,6 +24,12 @@ class StatusAction implements ActionInterface
             return;
         }
 
+        if ('pending' === $model['_status']) {
+            $request->markPending();
+
+            return;
+        }
+
         if ('captured' === $model['_status']) {
             $request->markCaptured();
             
